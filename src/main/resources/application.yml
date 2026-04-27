@@ -1,0 +1,33 @@
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+
+openapi: 3.0.0
+info:
+  title: Hour Service API
+  version: 1.0.0
+paths:
+  /api/time/hour:
+    get:
+      summary: Get current hour
+      description: Returns the current hour of the server
+      operationId: getCurrentHour
+      responses:
+        '200':
+          description: Current hour retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HourResponse'
+components:
+  schemas:
+    HourResponse:
+      type: object
+      properties:
+        hour:
+          type: integer
+          description: Current hour (0-23)
