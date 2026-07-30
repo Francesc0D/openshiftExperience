@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+
+  pre_build:
+    commands:
+      - echo Build Maven
+      - mvn clean package
+
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $ECR_URI
+
+  build:
+    commands:
+      - docker build -t hourly .
+      - docker tag hourly:latest $ECR_URI:latest
+
+  post_build:
+    commands:
+      - docker push $ECR_URI:latest
